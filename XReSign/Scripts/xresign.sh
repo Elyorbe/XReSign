@@ -75,7 +75,22 @@ fi
 
 
 echo "Get list of components and resign with certificate: $DEVELOPER"
-find -d "$APPDIR" \( -name "*.app" -o -name "*.appex" -o -name "*.framework" -o -name "*.dylib" \) > "$TMPDIR/components.txt"
+find -d "$APPDIR" \( -name "*.app" -o -name "*.appex" -o -name "*.dylib" \) > "$TMPDIR/components.txt"
+
+
+echo "Get list of frameworks"
+framework_dirs=$(find -d "$APPDIR" \( -name "*.framework" \))
+
+for framework_dir in ${framework_dirs[*]}
+do
+    echo "Signing framework $framework_dir"
+    framework_parent_dir=$(dirname "$framework_dir")
+    old_signature="$framework_dir/_CodeSignature"
+    rm -rv $old_signature
+    /usr/bin/codesign -d --entitlements - "$framework_dir" > "$framework_parent_dir/entitlements.plist"
+    /usr/bin/codesign -f -s "$DEVELOPER" --entitlements "$framework_parent_dir/entitlements.plist" "$framework_dir"
+    rm -rv "$framework_parent_dir/entitlements.plist"
+done
 
 var=$((0))
 while IFS='' read -r line || [[ -n "$line" ]]; do
