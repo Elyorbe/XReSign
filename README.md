@@ -1,7 +1,9 @@
 # XReSign 
-XReSign allows you to sign or resign unencrypted ipa-files with certificate for which you hold the corresponding private key. Checked for developer, ad-hoc and enterprise distribution. 
+XReSign allows you to sign or resign unencrypted ipa-files with certificate for which you hold the corresponding private key. Checked for App Store, Developer, Ad Hoc and Enterprise distribution. 
 
 ## How to use
+
+Clone this repo and open in Xcode. Build and run the application. If there is no error, you should see the GUI application.
 
 ### GUI application
 ![Screenshot](https://github.com/xndrs/XreSign/blob/master/screenshot/screenshot.png)
